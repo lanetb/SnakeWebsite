@@ -1,21 +1,13 @@
-import { createServer } from "http";
-import { Server } from "socket.io";
-
 const express = require('express');
 const app = express();
-const httpServer = createServer(app);
-const io = new Server(httpServer, { 
-  cors: {origin: "*"}
+const port = 3000;
+const server = app.listen(port)
+const io = require('socket.io')(server);
+
+app.get('/', (req, res) => {
+  res.send('hello');
+});   
+
+app.on('connection', (socket) => {
+  console.log(`a user connected: ${socket.id}`)
 });
-
-io.on("connection", (socket) => {
-  // ...
-  console.log('a user connected');
-
-  socket.on('message', (message) => {
-    console.log(message);
-    io.emit('message', `${socket.id.substr(0, 2)} said ${message}` );
-  });
-});
-
-httpServer.listen(8080, () => console.log('listening on http//localhost:8080'));
