@@ -1,12 +1,11 @@
 "use strict";
 const express = require('express');
 const app = express();
-const port = 3000;
-const server = app.listen(port);
-const io = require('socket.io')(server);
+const http = require('http');
+const server = http.createServer(app);
 app.get('/', (req, res) => {
-    res.send('hello');
+    res.send('<h1>Hello world</h1>');
 });
-app.on('connection', (socket) => {
-    console.log(`a user connected: ${socket.id}`);
+server.listen(3000, () => {
+    console.log('listening on *:3000');
 });
