@@ -11,5 +11,9 @@ server.listen(3000, () => {
   console.log('listening on *:3000');
 });
 
+server.on('connection', (socket) => {
+  console.log('2')
+});
+
 
 
